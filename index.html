@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consumindo uma API</title>
+  <style>
+    body {
+      background-color: rgb(205, 205, 205);
+      font-family: verdana;
+    }
+    #data{
+      padding: 20px 20px 20px 20px;
+      background-color: rgb(255, 255, 255);
+    }
+    #data li{
+      list-style-type: none;
+    }
+    #data ul{
+      background-color: rgb(231, 231, 238);
+    }
+    h1 {
+      color: black;
+      text-align: center;
+    }  
+    p {
+      font-size: 12px;
+    }
+    </style>
+</head>
+<body>
+  <h1>Dados "GET" da "API"</h1>
+  <div id="data"></div>
+  <script>
+    // URL da API
+    const apiUrl = 'https://rogerszme.pythonanywhere.com/api/books/';
+    // Fazendo uma requisição GET
+    fetch(apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Erro ao buscar dados da API');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const dataContainer = document.getElementById('data');
+        data.forEach(item => {
+          const post = document.createElement('div');
+          post.innerHTML = `<ul><li><h5>id${item.id}</h5></li>
+    <li><h2>${item.title}</h2></li><li><h2>${item.release_year}</h2></li></ul>`;
+          dataContainer.appendChild(post);
+        });
+      })
+      .catch(error => {
+        console.error('Erro:', error);
+      });
+  </script>
+</body>
+</html>
